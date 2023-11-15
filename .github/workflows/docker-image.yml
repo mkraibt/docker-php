@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "8.1.23-fpm", "latest" ]
     
 jobs:
 
