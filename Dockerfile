@@ -165,6 +165,12 @@ RUN apt-get -y autoremove && \
 RUN apt-get update
 
 #--------------------------------------------------------------------------
+# Copy Executable
+#--------------------------------------------------------------------------
+COPY  entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod 700 /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+#--------------------------------------------------------------------------
 # Override work directory from php:8.1.23-fpm
 #--------------------------------------------------------------------------
 WORKDIR /app
