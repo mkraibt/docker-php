@@ -1,2 +1,2 @@
 #!/bin/sh
-echo "Hello World Latest"
+echo "Hello World Latest branch"
