@@ -1,8 +1,3 @@
 .git
-.vagrant
-.idea
-data
-vendor
-runtime
-web/assets
-config/local.php
+#IDE SETTING
+.idea/
