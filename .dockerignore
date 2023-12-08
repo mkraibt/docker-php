@@ -1,5 +1,6 @@
 .git
 .vagrant
+.idea
 data
 vendor
 runtime
