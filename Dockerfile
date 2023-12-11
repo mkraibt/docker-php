@@ -104,8 +104,7 @@ RUN docker-php-ext-configure gd \
             mysqli \
             pcntl \
             calendar \
-            tidy \
-            ssh2
+            tidy
     #gearman - disabled as it has no support in php 8.1 yet https://github.com/php/pecl-networking-gearman/issues/12
 
 #--------------------------------------------------------------------------
