@@ -126,8 +126,8 @@ RUN printf "\n" | pecl install \
 #--------------------------------------------------------------------------
 # Install composer
 #--------------------------------------------------------------------------
-RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --version=2.5.8 --install-dir=/usr/local/bin && \
-    composer clear-cache
+COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
+RUN composer clear-cache
 
 #--------------------------------------------------------------------------
 # Install Yii framework bash autocompletion
