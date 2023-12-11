@@ -167,7 +167,7 @@ RUN apt-get update
 #--------------------------------------------------------------------------
 # Copy Executable
 #--------------------------------------------------------------------------
-COPY  entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY  setup/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 700 /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 #--------------------------------------------------------------------------
