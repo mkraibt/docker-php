@@ -1,4 +1,4 @@
-FROM mkraibt/php:8.1.23-fpm
+FROM php:8.1.23-fpm
 MAINTAINER mkraibt <mkraibt@gmail.com>
 
 #--------------------------------------------------------------------------
