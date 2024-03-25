@@ -1,6 +1,7 @@
-FROM mkraibt/php:8.1.23-fpm
+FROM php:8.1.23-fpm-bullseye
 MAINTAINER mkraibt <mkraibt@gmail.com>
 
+RUN apt-get update
 #--------------------------------------------------------------------------
 # Install base OS packages
 #--------------------------------------------------------------------------
@@ -104,8 +105,7 @@ RUN docker-php-ext-configure gd \
             mysqli \
             pcntl \
             calendar \
-            tidy \
-            ssh2
+            tidy
     #gearman - disabled as it has no support in php 8.1 yet https://github.com/php/pecl-networking-gearman/issues/12
 
 #--------------------------------------------------------------------------
@@ -126,7 +126,7 @@ RUN printf "\n" | pecl install \
 #--------------------------------------------------------------------------
 # Install composer
 #--------------------------------------------------------------------------
-COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.6.5
 RUN composer clear-cache
 
 #--------------------------------------------------------------------------
@@ -167,12 +167,12 @@ RUN apt-get update
 #--------------------------------------------------------------------------
 # Copy Executable
 #--------------------------------------------------------------------------
-COPY  entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY  setup/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 700 /usr/local/bin/entrypoint.sh
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 #--------------------------------------------------------------------------
 # Override work directory from php:8.1.23-fpm
 #--------------------------------------------------------------------------
 WORKDIR /app
 
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
