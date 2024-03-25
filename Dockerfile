@@ -1,4 +1,4 @@
-FROM php:8.1.23-fpm
+FROM php:8.1.23-fpm-bullseye
 MAINTAINER mkraibt <mkraibt@gmail.com>
 
 RUN apt-get update
