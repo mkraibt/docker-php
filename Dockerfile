@@ -1,6 +1,7 @@
 FROM php:8.1.23-fpm
 MAINTAINER mkraibt <mkraibt@gmail.com>
 
+RUN apt-get update
 #--------------------------------------------------------------------------
 # Install base OS packages
 #--------------------------------------------------------------------------
