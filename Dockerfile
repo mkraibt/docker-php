@@ -1,9 +1,8 @@
 FROM php:8.3-fpm-bookworm
-MAINTAINER mkraibt <mkraibt@gmail.com>
-
+LABEL maintainer="mkraibt <mkraibt@gmail.com>"
 # Install base OS packages and dependencies
 RUN apt-get update && \
-    apt-get -y install \
+    apt-get -y install --no-install-recommends \
         apt-utils \
         g++ \
         gcc \
@@ -46,7 +45,8 @@ RUN apt-get update && \
         netcat-traditional \
         inotify-tools \
         unzip \
-        --no-install-recommends && \
+        libssl-dev \
+        build-essential && \
     # Setup Node.js LTS (22.x)
     curl -sL https://deb.nodesource.com/setup_22.x | bash - && \
     apt-get -y install nodejs && \
@@ -54,6 +54,7 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 
 # Update npm & Install Less Compiler and other globals
 RUN npm -g install npm@latest && \
@@ -69,7 +70,6 @@ RUN cd /tmp && \
         -o lockrun.c && \
     gcc lockrun.c -o lockrun && \
     cp lockrun /usr/local/bin/
-
 # Install PHP extensions using mlocati installer (handles core and PECL)
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions && \
@@ -89,11 +89,13 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
         pcntl \
         calendar \
         tidy \
-        apcu@5.1.27 \
-        memcached@3.2.0 \
-        imagick@3.8.0 \
-        mailparse@3.1.8
-    # Note: Gearman disabled - no PHP 8.3 support yet[](https://github.com/php/pecl-networking-gearman/issues/12)
+        apcu \
+        igbinary \
+        msgpack \
+        memcached \
+        imagick \
+        mailparse
+    # Note: Gearman disabled - no PHP 8.3 support yet
 
 # Install Composer (latest version)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
@@ -118,13 +120,12 @@ RUN curl -L http://robo.li/robo.phar \
          -o /usr/local/bin/robo && \
     chmod +x /usr/local/bin/robo
 
-# Switch to non-root user for security
-USER www-data
-
 # Copy Executable (entrypoint)
 COPY setup/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 700 /usr/local/bin/entrypoint.sh
 
+# Switch to non-root user for security
+USER www-data
 # Override work directory
 WORKDIR /app
 
