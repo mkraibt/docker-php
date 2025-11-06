@@ -124,6 +124,9 @@ RUN curl -L http://robo.li/robo.phar \
 COPY setup/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 700 /usr/local/bin/entrypoint.sh
 
+# Switch to non-root user for security
+USER www-data
+
 # Override work directory
 WORKDIR /app
 
