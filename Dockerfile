@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-bookworm
+FROM php:8.3.36-fpm-bookworm
 LABEL maintainer="mkraibt <mkraibt@gmail.com>"
 # Install base OS packages and dependencies
 RUN apt-get update && \
